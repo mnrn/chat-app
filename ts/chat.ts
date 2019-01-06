@@ -5,11 +5,10 @@ window.onload = function() {
     else {
         let socket = new WebSocket("ws://" + location.host + "/room");  // WebSocket接続を開始する。
         socket.onclose = function() {
-            alert("接続が終了しました。");
+            console.log("接続が終了しました。");
         }
-        socket.onmessage = function(e) {
-            const msg = JSON.parse(e.data);
-            makeChatDOM(msg);
+        socket.onmessage = function(event) {
+            makeChatDOM(JSON.parse(event.data));
         }
         listenSubmit(socket);
     }
