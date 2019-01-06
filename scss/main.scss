@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&subset=japanese');
+$main-font: 'M PLUS Rounded 1c', sans-serif;
+
+body {
+    font-family: $main-font;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $main-font;
+}
