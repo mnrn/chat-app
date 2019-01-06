@@ -13,7 +13,7 @@ window.onload = function(){
             makeChatDOM(msg);
         }
     }
-    submit(socket);
+    listenSubmit(socket);
 }
 
 function makeChatDOM(msg) {
@@ -34,19 +34,20 @@ function makeChatDOM(msg) {
     messages.appendChild(chatMsg);
 }
 
-function submit(socket) {
-    $("#chatbox").submit(function() {
-        let msgbox  = $("#chatbox textarea");
-        if (!msgbox.val()) {
+function listenSubmit(socket) {
+    let callback = function(ev) {
+        let msgbox = document.querySelector("#chatbox textarea");
+        if (!msgbox.value) {
             alert("メッセージを入力してください。");
-            return false;
+            ev.preventDefault();
         }
         if (!socket) {
             alert("エラー: WebSocket接続が行われていません。");
-            return false;
+            ev.preventDefault();
         }
-        socket.send(JSON.stringify({"Message": msgbox.val()}));
-        msgbox.val("");
-        return false;
-    });
+        socket.send(JSON.stringify({"Message": msgbox.value}));
+        msgbox.value = "";
+        ev.preventDefault();
+    };
+    document.getElementById("chatbox").addEventListener("submit", callback, false);
 }
